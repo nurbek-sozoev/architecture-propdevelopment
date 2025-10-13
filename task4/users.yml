@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: billing
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: crm
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: platform
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: security
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: billing-manager
+  namespace: billing
+  labels:
+    rbac.example.com/group: editors
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: crm-manager
+  namespace: crm
+  labels:
+    rbac.example.com/group: editors
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: platform-config-manager
+  namespace: platform
+  labels:
+    rbac.example.com/group: editors
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: security-manager
+  namespace: security
+  labels:
+    rbac.example.com/group: privileged
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: billing-readonly
+  namespace: billing
+  labels:
+    rbac.example.com/group: readonly
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: crm-readonly
+  namespace: crm
+  labels:
+    rbac.example.com/group: readonly
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: security-privileged
+  namespace: security
+  labels:
+    rbac.example.com/group: privileged
+

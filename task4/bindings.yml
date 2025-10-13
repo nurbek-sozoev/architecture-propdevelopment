@@ -1,0 +1,70 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crb-readonly-all
+subjects:
+  - kind: ServiceAccount
+    name: billing-readonly
+    namespace: billing
+  - kind: ServiceAccount
+    name: crm-readonly
+    namespace: crm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-readonly
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crb-config-manager
+subjects:
+  - kind: ServiceAccount
+    name: platform-config-manager
+    namespace: platform
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-config-manager
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crb-privileged-secrets
+subjects:
+  - kind: ServiceAccount
+    name: security-manager
+    namespace: security
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: privileged-secrets-reader
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rb-billing-manager
+  namespace: billing
+subjects:
+  - kind: ServiceAccount
+    name: billing-manager
+    namespace: billing
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: namespace-editor
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rb-crm-manager
+  namespace: crm
+subjects:
+  - kind: ServiceAccount
+    name: crm-manager
+    namespace: crm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: namespace-editor
+
