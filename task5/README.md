@@ -6,7 +6,6 @@
 cd task5
 minikube start --cni=calico
 minikube image build -t nginx-curl:1.0 .
-minikube image load nginx-curl:1.0
 ```
 
 ```bash
