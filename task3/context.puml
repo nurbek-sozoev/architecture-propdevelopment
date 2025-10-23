@@ -1,0 +1,30 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(customer, "Собственник/Жилец", "Пользуется мобильным приложением PropDevelopment")
+System_Boundary(pd, "PropDevelopment") {
+  System(system_mobile, "Мобильное приложение PropDevelopment", "iOS/Android")
+  System(system_api, "API PropDevelopment", "Публичный Backend API")
+  System(auth, "Auth Service", "Единая аутентификация пользователей")
+  System(crm, "CRM", "Данные объектов/договоров/статусов")
+  System(billing, "Billing/Счета", "Оплаты услуг ЖКХ")
+  System(notify, "Уведомления", "Push/SMS/e-mail")
+}
+
+System_Ext(sh_platform, "Партнёр: Платформа «Умный дом»", "Видеодомофоны, шлагбаумы, распознавание лиц/номеров")
+System_Ext(cctv, "IP-домофоны/камеры", "Устройства на подъездах/въездах")
+System_Ext(barrier, "Шлагбаумы/контроллеры", "Устройства управления доступом")
+
+Rel(customer, system_mobile, "Использует")
+Rel(system_mobile, system_api, "Вызовы API", "HTTPS")
+Rel(system_api, auth, "Аутентификация/токены")
+Rel(system_api, crm, "Договоры, права")
+Rel(system_api, notify, "Пуш-уведомления")
+Rel(system_api, sh_platform, "Команды/права/webhooks")
+Rel(sh_platform, system_api, "События/вебхуки (открыто/ошибка/видеозвонок)")
+Rel(sh_platform, cctv, "Видео/биометрия")
+Rel(sh_platform, barrier, "Управление шлагбаумом")
+Rel(customer, sh_platform, "Видео-звонок/открыть")
+Rel(system_api, billing, "Статусы оплат (при необходимости)")
+
+@enduml

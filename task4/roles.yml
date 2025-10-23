@@ -1,0 +1,48 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-readonly
+rules:
+  - apiGroups: ["", "apps", "batch", "autoscaling", "networking.k8s.io", "policy"]
+    resources: ["pods", "pods/log", "services", "endpoints"]
+    verbs: ["get", "list", "watch"]
+  - nonResourceURLs: ["/healthz", "/version", "/metrics"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-config-manager
+rules:
+  - apiGroups: ["", "apps", "batch", "autoscaling", "networking.k8s.io", "policy"]
+    resources: ["pods", "services", "endpoints"]
+    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: privileged-secrets-reader
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: namespace-editor
+  namespace: billing
+rules:
+  - apiGroups: ["", "apps", "batch", "autoscaling", "networking.k8s.io", "policy"]
+    resources: ["pods", "services", "endpoints"]
+    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: namespace-editor
+  namespace: crm
+rules:
+  - apiGroups: ["", "apps", "batch", "autoscaling", "networking.k8s.io", "policy"]
+    resources: ["pods", "services", "endpoints"]
+    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
